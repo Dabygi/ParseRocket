@@ -4,10 +4,12 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_all_pages():
+def get_page():
     headers = {
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36"
     }
+
+    """Получение html страницы для более удобной работы"""
 
     # r = requests.get(url="https://www.mebelshara.ru/contacts/", headers=headers)
     #
@@ -55,19 +57,11 @@ def get_all_pages():
                 }
             )
 
+
         """Запись json файла"""
 
     with open(f"mebelshara.json", "w") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
-
-
-        """Проверка вывода"""
-
-        # print(f'address: "{city}, {street}",')
-        # print(f'latlon: [{latitude}, {longitude}],')
-        # print(f'name: "{name}",')
-        # print(f'phones: [{phones}],')
-        # print(f'working_hours: ["{work_time} {work_week}"]')
 
 
         """ Требования """
@@ -80,7 +74,7 @@ def get_all_pages():
 # },
 
 def main():
-    get_all_pages()
+    get_page()
 
 
 if __name__ == '__main__':
