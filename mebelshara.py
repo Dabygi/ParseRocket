@@ -19,6 +19,9 @@ def get_page():
     # with open("data/mebelshara.html", "w") as file:
     #     file.write(r.text)
 
+
+    """Получение данных"""
+
     data = []
     with open("data/mebelshara.html") as file:
         src = file.read()
@@ -38,6 +41,7 @@ def get_page():
             name = destination.find("div", class_="shop-name").text
             phones = destination.find("div", class_="shop-phone").text
             work_time = destination.get("data-shop-mode1")
+
             excep = ('Без выходных:', 'Без выходных')
             if work_time in excep:
                 work_time = "пн - вс"
@@ -65,6 +69,7 @@ def get_page():
 
 
         """ Требования """
+
 # {
 #     "address": "Белгород, Пугачева, 5",
 #     "latlon": [44.983268, 41.096873],
