@@ -31,28 +31,37 @@ def get_all_pages():
 
         for destination in list_shops:
             street = destination.find("div", class_="shop-address").text
-            latitude = destination.get("data-shop-latitude")
-            longitude = destination.get("data-shop-longitude")
+            latitude = float(destination.get("data-shop-latitude"))
+            longitude = float(destination.get("data-shop-longitude"))
             name = destination.find("div", class_="shop-name").text
             phones = destination.find("div", class_="shop-phone").text
             work_time = destination.get("data-shop-mode1")
-            if work_time == 'Без выходных:':
+            excep = ('Без выходных:', 'Без выходных')
+            if work_time in excep:
                 work_time = "пн - вс"
+            else:
+                work_time = work_time
+
             work_week = destination.get("data-shop-mode2")
+            work = work_time + " " + work_week
 
             data.append(
                 {
-                    "address": city,
-                    "latlon": [latitude, longitude],
+                    "address": street,
+                    "latlon": [float(latitude), float(longitude)],
                     "name": name,
                     "phones": [phones],
-                    "working_hours": [work_time, work_week]
+                    "working_hours": [work]
                 }
             )
 
-    with open(f"mebelshara.json", "a") as file:
+        """Запись json файла"""
+
+    with open(f"mebelshara.json", "w") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
+
+        """Проверка вывода"""
 
         # print(f'address: "{city}, {street}",')
         # print(f'latlon: [{latitude}, {longitude}],')
@@ -60,6 +69,8 @@ def get_all_pages():
         # print(f'phones: [{phones}],')
         # print(f'working_hours: ["{work_time} {work_week}"]')
 
+
+        """ Требования """
 # {
 #     "address": "Белгород, Пугачева, 5",
 #     "latlon": [44.983268, 41.096873],
@@ -67,7 +78,6 @@ def get_all_pages():
 #     "phones": ["8 800 551 06 10"]
 #     "working_hours": ["пн - вс 10:00 - 20:00"]
 # },
-
 
 def main():
     get_all_pages()
