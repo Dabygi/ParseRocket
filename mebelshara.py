@@ -62,7 +62,7 @@ def get_page():
 
         """Запись json файла"""
 
-    with open(f"mebelshara.json", "w") as file:
+    with open(f"data/mebelshara.json", "w") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
 
