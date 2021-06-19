@@ -19,7 +19,6 @@ def get_page():
     # with open("data/mebelshara.html", "w") as file:
     #     file.write(r.text)
 
-
     """Получение данных"""
 
     data = []
@@ -27,20 +26,19 @@ def get_page():
         src = file.read()
 
     soup = BeautifulSoup(src, "lxml")
-    city_name = soup.find_all("div", class_="city-item")
+    list_shops = soup.find_all("div", class_="city-item")
 
-    for name in city_name:
-        city = name.find("h4", class_="js-city-name").text
-
-        list_shops = soup.find_all("div", class_="shop-list-item")
-
-        for destination in list_shops:
-            street = destination.find("div", class_="shop-address").text
-            latitude = float(destination.get("data-shop-latitude"))
-            longitude = float(destination.get("data-shop-longitude"))
-            name = destination.find("div", class_="shop-name").text
-            phones = destination.find("div", class_="shop-phone").text
-            work_time = destination.get("data-shop-mode1")
+    for destination in list_shops:
+        city = destination.find("h4", class_="js-city-name").text
+        info = destination.find_all("div", class_="shop-list-item")
+        for st in info:
+            street = st.get("data-shop-address")
+            addr = city + ", " + street
+            latitude = float(st.get("data-shop-latitude"))
+            longitude = float(st.get("data-shop-longitude"))
+            name = st.get("data-shop-name")
+            phones = st.get("data-shop-phone").replace('(', '').replace(')', '')
+            work_time = st.get("data-shop-mode1")
 
             excep = ('Без выходных:', 'Без выходных')
             if work_time in excep:
@@ -48,13 +46,13 @@ def get_page():
             else:
                 work_time = work_time
 
-            work_week = destination.get("data-shop-mode2")
+            work_week = st.get("data-shop-mode2")
             work = work_time + " " + work_week
 
             data.append(
                 {
-                    "address": street,
-                    "latlon": [float(latitude), float(longitude)],
+                    "address": addr,
+                    "latlon": [latitude, longitude],
                     "name": name,
                     "phones": [phones],
                     "working_hours": [work]
