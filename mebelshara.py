@@ -52,10 +52,10 @@ def get_page():
             data.append(
                 {
                     "address": addr,
-                    "latlon": [latitude, longitude],
+                    "latlon": ([latitude, longitude]),
                     "name": name,
-                    "phones": [phones],
-                    "working_hours": [work]
+                    "phones": ([phones]),
+                    "working_hours": ([work])
                 }
             )
 
