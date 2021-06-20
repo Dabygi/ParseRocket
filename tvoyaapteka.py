@@ -3,6 +3,13 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
+"""
+План
+1. Через клиент-серверный запрос ("https://www.tvoyaapteka.ru/bitrix/ajax/modal_geoip.php?action=get_towns&region_id=")
+и подставление айдишников с 918 по 923 получаем json с id городов
+2. Текущий 'current' город открывает JS
+...
+"""
 
 def get_data():
     headers = {

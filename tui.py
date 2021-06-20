@@ -4,23 +4,24 @@ import requests
 from bs4 import BeautifulSoup
 
 
+"""
+План
+1. Через клиент-серверный запрос ("https://apigate.tui.ru/api/office/cities") получаем json с id городов
+2. Подставляем id городов в конец запроса (https://apigate.tui.ru/api/office/list?cityId=) получаем инфу о офисах
+3. Извлекаем требуемые данные, форматируем, упорядочиваем
+4. Записываем json
+"""
+
 def get_data(url):
-    headers = {
-        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36"
-    }
 
-    req = requests.get(url, headers)
-    print(req.text)
+    response = requests.get(url)
+    data = response.json()
+    city = [x for x in data['cities']][0]
+    return print(city['cityId'])
 
-    if not os.path.exists("data"):
-        os.mkdir("data")
+get_data("https://apigate.tui.ru/api/office/cities")
 
-    with open("data/tui.html", "w") as file:
-        file.write(req.text)
 
-get_data("https://www.tui.ru/offices/")
-
-#
 # def main():
 #     get_data()
 #
